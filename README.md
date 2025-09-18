@@ -1,6 +1,6 @@
 # ProjetoCY - Cypress E2E Testing
 
-Este projeto contém testes automatizados end-to-end (E2E) utilizando Cypress para validar funcionalidades de login e carrinho de compras da aplicação SauceDemo.
+Este projeto contém testes automatizados end-to-end (E2E) utilizando Cypress para validar funcionalidades da aplicação SauceDemo.
 
 ## 🎯 Sobre o Projeto
 
@@ -8,16 +8,6 @@ Este projeto implementa testes automatizados para validar as principais funciona
 - Autenticação de usuários
 - Gerenciamento de carrinho de compras
 - Validação de cenários de sucesso e erro
-
-## ⚡ Funcionalidades Testadas
-
-### Login
-- ✅ Login com credenciais válidas
-- ❌ Login com credenciais inválidas
-
-### Carrinho de Compras
-- ✅ Adicionar produto ao carrinho
-- ✅ Remover produto do carrinho
 
 ## 🛠️ Tecnologias Utilizadas
 
