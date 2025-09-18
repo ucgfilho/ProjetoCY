@@ -111,7 +111,8 @@ Principais configurações:
 - **Segurança**: `chromeWebSecurity: false`
 - **Screenshots**: Incorporadas nos relatórios
 - **Assets**: Inline para portabilidade
-```
+
+---
 
 ## 📈 Resultados dos Últimos Testes
 
