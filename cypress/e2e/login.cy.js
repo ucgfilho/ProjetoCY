@@ -1,23 +1,31 @@
-describe('Login', () => {
+import Login from "../pages/login/index.js";
 
-  it('Realizar login com sucesso', () => {
-    
+describe("Login", () => {
+  beforeEach(() => {
     // Arrange
-    cy.login()
+    Login.visitarPagina();
+  });
+
+  it("Realizar login com sucesso", () => {
+    // Act
+    Login.preencherCredenciaisValidas();
 
     // Assert
-    cy.url().should('eq', 'https://www.saucedemo.com/inventory.html')
-    
-    cy.screenshot('Login')
-  })
+    cy.url().should("eq", "https://www.saucedemo.com/inventory.html");
 
-  it('Realizar login sem sucesso - credenciais inválidas', () => {
-    // Arrange
-    cy.loginError()
+    cy.screenshot("Login");
+  });
+
+  it("Realizar login sem sucesso - credenciais inválidas", () => {
+    // Act
+    Login.preencherCredenciaisInvalidas();
 
     // Assert
-    cy.get('[data-test="error"]').should('contain.text', 'Epic sadface: Username and password do not match any user in this service')
+    cy.get('[data-test="error"]').should(
+      "contain.text",
+      "Epic sadface: Username and password do not match any user in this service"
+    );
 
-    cy.screenshot('Login sem sucesso - credenciais inválidas')
-  })
-})
+    cy.screenshot("Login sem sucesso - credenciais inválidas");
+  });
+});
