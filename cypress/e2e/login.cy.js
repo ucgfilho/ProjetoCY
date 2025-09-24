@@ -1,4 +1,5 @@
 import Login from "../pages/login/index.js";
+import Inventory from "../pages/inventory/index.js";
 
 describe("Login", () => {
   beforeEach(() => {
