@@ -22,10 +22,7 @@ describe("Login", () => {
     Login.preencherCredenciaisInvalidas();
 
     // Assert
-    cy.get('[data-test="error"]').should(
-      "contain.text",
-      "Epic sadface: Username and password do not match any user in this service"
-    );
+    Inventory.MensagemErro();
 
     cy.screenshot("Login sem sucesso - credenciais inválidas");
   });
