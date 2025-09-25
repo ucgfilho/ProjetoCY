@@ -1,5 +1,7 @@
 import Login from "../pages/login/index.js";
-import Inventory from "../pages/inventory/index.js";
+import Carrinho from "../pages/inventory/index.js";
+import Header from "../pages/header/index.js";
+import Cart from "../pages/cart/index.js";
 
 describe("Carrinho", () => {
   beforeEach(() => {
@@ -10,24 +12,27 @@ describe("Carrinho", () => {
 
   it("Adicionar produto ao carrinho com sucesso", () => {
     // Act
-    Inventory.AdicionarProduto();
+    const qtdItensAdicionados = 1;
+    Carrinho.adicionarProduto("Sauce Labs Backpack");
 
     // Assert
-    Inventory.ValidarProdutoAdicionado();
+    Header.validarCarrinhoPossuiItens(qtdItensAdicionados);
+    Header.navegarParaCarrinho();
+    Cart.validarProdutoPresenteNoCarrinho("Sauce Labs Backpack");
   });
 
   it("Remover produto do carrinho com sucesso", () => {
     // Arrange
     cy.get("body").then(($body) => {
       if ($body.find(".shopping_cart_badge").length === 0) {
-        Inventory.AdicionarProduto();
+        Carrinho.adicionarProduto("Sauce Labs Backpack");
       }
     });
 
     // Act
-    Inventory.RemoverProduto();
+    Carrinho.removerProduto();
 
     // Assert
-    Inventory.ValidarProdutoRemovido();
+    Carrinho.validarProdutoRemovido();
   });
 });

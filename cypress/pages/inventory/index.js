@@ -1,44 +1,47 @@
 import { elements as el } from "./elements.js";
 
-class Inventory {
-  ValidarProdutoAdicionado() {
+class Carrinho {
+  validarAcessoAPagina() {
     // Assert
-    cy.get(el.qtdItensCarrinho).should("be.visible").and("have.text", "1");
-    cy.get(el.carrinho).click();
-    cy.get(el.produtoAdicionado).should("be.visible");
-    cy.screenshot("Produto adicionado");
+    cy.url().should("eq", "www.saucedemo.com/cart.html");
+
+    cy.screenshot("Página do carrinho");
   }
 
-  AdicionarProduto() {
-    // Act - Aguarda a página carregar e clica no botão
-    cy.url().should("include", "/inventory.html");
-    cy.get(el.adicionarProduto).should("be.visible").click();
+  adicionarProduto(itemName) {
+    // Act
+    cy.get(el.addToCart(itemName)).click();
   }
 
-  RemoverProduto() {
+  removerProduto() {
     // Act
     cy.get(el.carrinho).click();
     cy.get(el.botaoRemover).click();
   }
 
-  ValidarProdutoRemovido() {
+  validarProdutoAdicionado(quantidadeAnterior = 0) {
+    // Assert
+    cy.get(el.qtdItensCarrinho)
+      .should("be.visible")
+      .invoke("text")
+      .then((quantidadeAtual) => {
+        expect(parseInt(quantidadeAtual)).to.be.greaterThan(quantidadeAnterior);
+      });
+
+    cy.get(el.carrinho).click();
+    cy.get(el.produtoAdicionado).should("be.visible");
+
+    cy.screenshot("Produto adicionado");
+  }
+
+  validarProdutoRemovido() {
     // Assert
     cy.get(el.qtdItensCarrinho).should("not.exist");
-
-    // Volta para a página de inventário para validar que o botão mudou para "Add to cart"
     cy.get('[data-test="continue-shopping"]').click();
     cy.get(el.adicionarProduto).should("be.visible");
 
     cy.screenshot("Produto removido");
   }
-
-  MensagemErro() {
-    // Assert
-    cy.get(el.errorMessage).should(
-      "contain.text",
-      "Epic sadface: Username and password do not match any user in this service"
-    );
-  }
 }
 
-export default new Inventory();
+export default new Carrinho();

@@ -22,7 +22,7 @@ describe("Login", () => {
     Login.preencherCredenciaisInvalidas();
 
     // Assert
-    Inventory.MensagemErro();
+    Login.MensagemErro();
 
     cy.screenshot("Login sem sucesso - credenciais inválidas");
   });
