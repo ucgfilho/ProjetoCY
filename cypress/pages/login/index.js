@@ -6,8 +6,8 @@ class Login {
   }
 
   preencherCredenciaisValidas() {
-    cy.get(el.username).type("standard_user");
-    cy.get(el.password).type("secret_sauce");
+    cy.get(el.username).type(Cypress.env("username"));
+    cy.get(el.password).type(Cypress.env("password"));
     cy.get(el.loginButton).click();
   }
 
