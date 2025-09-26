@@ -2,11 +2,12 @@ const { defineConfig } = require('cypress')
 const baseConfig = require('./cypress.config')
 
 const e2e = {
-    baseURL: 'https://www.qa.saucedemo.com',
+    baseUrl: 'https://www.qa.saucedemo.com',
     env: {
         username: 'QA_sauce',
         password: 'QA_secret'
-    }
+    },
+    setupNodeEvents: baseConfig.e2e.setupNodeEvents
 }
 
 module.exports = defineConfig({

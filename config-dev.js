@@ -14,7 +14,8 @@ const e2e = {
     env: {
         username: process.env.USER,
         password: process.env.PASSWORD
-    }
+    },
+    setupNodeEvents: baseConfig.e2e.setupNodeEvents
 }
 
 module.exports = defineConfig({
