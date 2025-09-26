@@ -3,9 +3,6 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
-    env:
-      CYPRESS_username: ${{ secrets.CYPRESS_USERNAME }}
-      CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -14,9 +11,15 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
+      - name: Install dependencies
+        run: npm ci
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          install-command: npm install
+          install: false
+          browser: chrome
+        env:
+          CYPRESS_username: ${{ secrets.CYPRESS_USERNAME || 'standard_user' }}
+          CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD || 'secret_sauce' }}
