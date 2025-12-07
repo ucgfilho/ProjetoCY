@@ -1,36 +1,75 @@
 name: End-to-end tests
-on: push
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
+
     env:
       CYPRESS_username: ${{ secrets.CYPRESS_USERNAME }}
       CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
+
       - name: Install dependencies
         run: npm ci
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           install: false
-          browser: chrome
-          config: video=true
-      - uses: actions/upload-artifact@v4
+          browser: ${{ matrix.browser }}
+          spec: cypress/e2e/**/*.cy.js
+          config: video=true,screenshotOnRunFailure=true
+          headed: false
+        continue-on-error: false
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-reports
+          name: cypress-reports-${{ matrix.browser }}
           path: cypress/reports
           if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
-        if: always()
+          retention-days: 30
+
+      - name: Upload test videos
+        uses: actions/upload-artifact@v4
+        if: failure()
         with:
-          name: cypress-videos
+          name: cypress-videos-${{ matrix.browser }}
           path: cypress/videos
           if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.browser }}
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
