@@ -6,8 +6,8 @@ Testes automatizados E2E utilizando **Cypress** na aplicação **SauceDemo**.
 
 - **Node.js 20+**
 - **Cypress 15.7.1**
-- **Cypress Mochawesome Reporter**
-- **Mocha JUnit Reporter**
+- **Mochawesome Reporter**
+- **JUnit Reporter**
 - **GitHub Actions**
 - **GitLab CI/CD**
 
