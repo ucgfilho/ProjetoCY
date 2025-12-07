@@ -1,0 +1,50 @@
+stages:
+  - test
+
+variables:
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+  npm_config_cache: "$CI_PROJECT_DIR/cache/npm"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - cache/Cypress
+    - cache/npm
+    - node_modules
+
+.cypress_template:
+  stage: test
+  image: cypress/browsers:latest
+  before_script:
+    - npm ci
+  artifacts:
+    when: always
+    paths:
+      - cypress/videos
+      - cypress/screenshots
+      - cypress/reports
+    expire_in: 7 days
+
+cypress:chrome:
+  extends: .cypress_template
+  script:
+    - npx cypress run --browser chrome --spec "cypress/e2e/**/*.cy.js" --config video=true,screenshotOnRunFailure=true
+  variables:
+    CYPRESS_username: $CYPRESS_USERNAME
+    CYPRESS_password: $CYPRESS_PASSWORD
+
+cypress:firefox:
+  extends: .cypress_template
+  script:
+    - npx cypress run --browser firefox --spec "cypress/e2e/**/*.cy.js" --config video=true,screenshotOnRunFailure=true
+  variables:
+    CYPRESS_username: $CYPRESS_USERNAME
+    CYPRESS_password: $CYPRESS_PASSWORD
+
+cypress:edge:
+  extends: .cypress_template
+  script:
+    - npx cypress run --browser edge --spec "cypress/e2e/**/*.cy.js" --config video=true,screenshotOnRunFailure=true
+  variables:
+    CYPRESS_username: $CYPRESS_USERNAME
+    CYPRESS_password: $CYPRESS_PASSWORD
