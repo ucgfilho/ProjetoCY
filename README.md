@@ -9,7 +9,7 @@ Testes automatizados E2E utilizando **Cypress** na aplicação **SauceDemo**.
 - **Cypress Mochawesome Reporter**
 - **Mocha JUnit Reporter**
 - **GitHub Actions**
-- **GitLab CI**
+- **GitLab CI/CD**
 
 ## Instalação
 
